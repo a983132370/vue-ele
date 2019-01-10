@@ -1,0 +1,131 @@
+@charset "utf-8";
+/* reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q,
+samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article,
+aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+output, ruby, section, summary, time, mark, audio, video, textarea {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -ms-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+ol, ul, li {
+  list-style-type: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+input, textarea {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+
+textarea {
+  background: transparent;
+  overflow-y: auto;
+  resize: none;
+}
+
+textarea, button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+}
+
+h1, h2, h3, h4, h5, b, strong {
+  font-weight: normal;
+}
+
+em, i {
+  font-style: normal;
+}
+
+a, a:hover, a:active, a:link, a:visited, a:focus {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:active, a:hover, a:active, a:visited, a:focus, button, input, select, textarea {
+  outline: 0;
+}
+
+img {
+  border: 0;
+  vertical-align: top;
+}
+
+input, select, button {
+  border: 0;
+}
+
+body, button, input, select, textarea {
+  font-family: "Microsoft YaHei", "PingFang SC", "PingFangSC-Regular", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+}
+
+body {
+  font-size: 12px;
+}
+
+.clearfix:before, .clearfix:after {
+  display: table;
+  content: " ";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.main {
+  margin: 60px auto 0;
+  width: 1200px;
+}

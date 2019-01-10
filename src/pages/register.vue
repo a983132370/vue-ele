@@ -2,41 +2,48 @@
   <div class="loginBox">
     <div class="top"></div>
     <div class="content-box">
-      <h2>登录</h2>
+      <h2>注册</h2>
       <div class="input-item">
-        <input type="text" v-model="account" placeholder="请输入常用手机号/邮箱">
+        <input type="text" placeholder="请输入常用手机号/邮箱" v-model="account">
       </div>
       <div class="input-item">
-        <input type="password" v-model="pwd" placeholder="请输入密码">
+        <input type="password" placeholder="请输入密码" v-model="pwd">
       </div>
-      <button class="btn" @click="login">登录</button>
+      <div class="input-item">
+        <input type="password" placeholder="请重复密码" v-model="repwd">
+      </div>
+      <div class="input-item">
+        <input type="text" placeholder="请输入验证码" v-model="vcode">
+        <img :src="vcodeSrc" @click="loadVcodeSrc"/>
+      </div>
+      <button class="btn" @click="register">注册</button>
     </div>
   </div>
 </template>
 
 <script>
+
   export default {
-    name: 'login',
+    name: 'register',
     data() {
       return {
+        vcodeSrc : "",
         account : "",
         pwd : "",
+        repwd : "",
+        vcode : "",
       }
     },
-    mounted(){
-
+    mounted() {
+      this.loadVcodeSrc();
     },
-    methods:{
-      login() {
-        let param = {};
-        param.account = this.account;
-        param.pwd = this.pwd;
-        this.axios.post('/api/user/login',this.qs.stringify(param))
+    methods: {
+      loadVcodeSrc() {
+        this.axios.get('/api/vcode/register')
           .then(res => {
             var r = res.data;
-            if(r.code === 1){
-              alert("成功");
-              this.$router.push({name: 'home'})
+            if(r.code){
+              this.vcodeSrc = r.data;
             }else {
               alert(r.msg);
             }
@@ -44,13 +51,47 @@
           .catch(error => {
             console.log(error);
           });
+      },
+      register() {
+        let param = {};
+        param.account = this.account;
+        param.pwd = this.pwd;
+        param.repwd = this.repwd;
+        param.vcode = this.vcode;
+        this.axios.post('/api/user/register',this.qs.stringify(param))
+          .then(res => {
+            var r = res.data;
+            if(r.code === 1){
+              alert("成功");
+              this.$router.push({name: 'login'})
+            }else {
+              this.loadVcodeSrc();
+              alert(r.msg);
+            }
+          })
+          .catch(error => {
+            this.loadVcodeSrc();
+            console.log(error);
+          });
       }
-
     }
   }
 </script>
 
 <style scoped>
+  .input-item{
+    display: flex;
+    width: 400px;
+  }
+  .input-item input{
+    flex: 1;
+  }
+  .input-item img{
+    width: 120px;
+    height: 45px;
+    margin-left: 10px;
+  }
+
   .loginBox .top {
     position: relative;
     width: 100%;
