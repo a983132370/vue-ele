@@ -62,11 +62,19 @@
           .then(res => {
             var r = res.data;
             if(r.code === 1){
-              alert("成功");
+              this.$notify({
+                title: '注册提示',
+                message: '恭喜注册成功!欢迎登录',
+                type: 'success'
+              });
               this.$router.push({name: 'login'})
             }else {
               this.loadVcodeSrc();
-              alert(r.msg);
+              this.$notify({
+                title: '错误提示',
+                message: r.msg,
+                type: 'warning'
+              });
             }
           })
           .catch(error => {

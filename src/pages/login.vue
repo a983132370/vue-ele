@@ -35,10 +35,18 @@
           .then(res => {
             var r = res.data;
             if(r.code === 1){
-              alert("成功");
+              this.$notify({
+                title: '登录提示',
+                message: '欢迎登录',
+                type: 'success'
+              });
               this.$router.push({name: 'home'})
             }else {
-              alert(r.msg);
+              this.$notify({
+                title: '错误提示',
+                message: r.msg,
+                type: 'warning'
+              });
             }
           })
           .catch(error => {

@@ -97,6 +97,7 @@
               this.movieList = r.data.movieList;
               this.tvList = r.data.tvList;
               this.cartoonList = r.data.cartoonList;
+
             }else {
               alert(r.msg);
             }
@@ -116,7 +117,7 @@
         // ];
       },
       doplay(item){
-
+        this.$router.push({name: 'player'})
       },
       initSwiper() {
         new Swiper('.swiper-container', {

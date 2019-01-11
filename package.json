@@ -9,11 +9,12 @@
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
-    "test": "npm run unit && npm run e2色录像带e",
+    "test": "npm run unit && npm run dev",
     "build": "node build/build.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "element-ui": "^2.4.11",
     "swiper": "^4.4.6",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
