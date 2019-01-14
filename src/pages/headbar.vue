@@ -5,11 +5,11 @@
         <div class="navList">
           <router-link to="/" class="item cur">首页</router-link>
         </div>
-        <div class="login" v-if="!loginStat">
+        <div class="login" v-if="isLogin === 'false'">
           <router-link to="/login" class="item">登录</router-link>
           <router-link to="/register" class="item">注册</router-link>
         </div>
-        <div class="login" v-if="loginStat">
+        <div class="login" v-if="isLogin === 'true'">
           <div class="item">已登录</div>
           <a href="#" class="item" @click="logout">注销</a>
         </div>
@@ -23,17 +23,16 @@
     name: 'headbar',
     data() {
       return {
-        loginStat : false
+      }
+    },
+    computed:{
+      isLogin(){
+        return this.$store.state.isLogin;
       }
     },
     created() {
     },
     mounted() {
-    },
-    watch: {
-      '$route' (to, from) {
-        this.$router.go(0);
-      }
     },
     methods: {
       logout(){
@@ -45,6 +44,7 @@
                 message: '注销成功',
                 type: 'success'
               });
+              this.$store.commit('ACCOUNT_LOGOUT');
               this.$router.push({name: 'home'})
             }else {
               this.$notify({

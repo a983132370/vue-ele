@@ -40,6 +40,7 @@
                 message: '欢迎登录',
                 type: 'success'
               });
+              this.$store.commit('ACCOUNT_LOGIN');
               this.$router.push({name: 'home'})
             }else {
               this.$notify({

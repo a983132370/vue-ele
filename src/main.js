@@ -23,8 +23,10 @@ Vue.use(Alert);
 Vue.use(Vuex);
 
 //https://blog.csdn.net/weixin_42406046/article/details/80624932
-const ADD_COUNT = 'ADD_ACCOUNT'; // 用常量代替事件类型，使得代码更清晰
-const REMOVE_COUNT = 'REMOVE_ACCOUNT';
+const ADD_ACCOUNT = 'ADD_ACCOUNT'; // 用常量代替事件类型，使得代码更清晰
+const REMOVE_ACCOUNT = 'REMOVE_ACCOUNT';
+const ACCOUNT_LOGIN = 'ACCOUNT_LOGIN';
+const ACCOUNT_LOGOUT = 'ACCOUNT_LOGOUT';
 //注册状态管理全局参数
 var store = new Vuex.Store({
   state:{
@@ -37,7 +39,7 @@ var store = new Vuex.Store({
     //组件想要对于vuex 中的数据进行的处理
     //组件中采用this.$store.commit('方法名') 的方式调用，实现充分解耦
     //内部操作必须在此刻完成(同步)
-    [ACCOUNT_LOGIN] (state) { // 第一个参数为 state 用于变更状态 登录
+    [ACCOUNT_LOGIN] (state) { // 登录
       sessionStorage.setItem("isLogin", true);
       state.isLogin = true;
     },
@@ -49,13 +51,17 @@ var store = new Vuex.Store({
       sessionStorage.removeItem("token", token);
       state.token = token;
     },
+    [ACCOUNT_LOGOUT] (state) { // 退出登录
+      sessionStorage.setItem("isLogin", false);
+      state.isLogin = false;
+    },
   }
 });
 router.beforeEach((to, from, next) => {
-  iView.LoadingBar.start();//loadong 效果
-  store.state.token = sessionStorage.getItem('token');//获取本地存储的token
+  // iView.LoadingBar.start();//loadong 效果
+  store.state.isLogin = sessionStorage.getItem('isLogin');//获取本地存储的token
   if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
-    if (store.state.token !== "") {  // 通过vuex state获取当前的token是否存
+    if (store.state.isLogin) {
       next();
     }
     else {
@@ -74,6 +80,7 @@ router.beforeEach((to, from, next) => {
 //   iView.LoadingBar.finish();
 // });
 
+Vue.prototype.$store = store
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
