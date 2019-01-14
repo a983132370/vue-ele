@@ -33,9 +33,13 @@ export default new Router({
         {
           path: '/player',
           name: 'player',
-          component: player
+          component: player,
+          // meta: {
+          //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
+          // },
         }
       ]
-    }
+    },
+    // { path: '*', component: P404 }  //这里是保证错误地址会跳转到404界面进行提示
   ]
 })

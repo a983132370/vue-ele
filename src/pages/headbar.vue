@@ -5,9 +5,13 @@
         <div class="navList">
           <router-link to="/" class="item cur">首页</router-link>
         </div>
-        <div class="login">
+        <div class="login" v-if="!loginStat">
           <router-link to="/login" class="item">登录</router-link>
           <router-link to="/register" class="item">注册</router-link>
+        </div>
+        <div class="login" v-if="loginStat">
+          <div class="item">已登录</div>
+          <a href="#" class="item" @click="logout">注销</a>
         </div>
       </div>
     </div>
@@ -18,13 +22,43 @@
   export default {
     name: 'headbar',
     data() {
-      return {}
+      return {
+        loginStat : false
+      }
     },
     created() {
     },
     mounted() {
     },
-    methods: {}
+    watch: {
+      '$route' (to, from) {
+        this.$router.go(0);
+      }
+    },
+    methods: {
+      logout(){
+        this.axios.post('/api/user/logout')
+          .then(res => {
+            var r = res.data;
+            if(r.code === 1){
+              this.$notify({
+                message: '注销成功',
+                type: 'success'
+              });
+              this.$router.push({name: 'home'})
+            }else {
+              this.$notify({
+                title: '错误提示',
+                message: r.msg,
+                type: 'warning'
+              });
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      },
+    }
   }
 </script>
 <style scoped>

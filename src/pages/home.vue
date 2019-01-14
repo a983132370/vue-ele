@@ -117,7 +117,7 @@
         // ];
       },
       doplay(item){
-        this.$router.push({name: 'player'})
+        this.$router.push("/player?id="+item.id)
       },
       initSwiper() {
         new Swiper('.swiper-container', {
