@@ -2,9 +2,7 @@
   <div class="main">
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="//puui.qpic.cn/media_img/lena/PICxpgz13_580_1680/0"></div>
-        <div class="swiper-slide"><img src="//puui.qpic.cn/media_img/lena/PICd1loir_580_1680/0"></div>
-        <div class="swiper-slide"><img src="//puui.qpic.cn/tv/0/48015925_1680580/0"></div>
+        <div class="swiper-slide" v-for="(item,index) in recBannerList"><img :src="item.pic"></div>
       </div>
       <!-- 如果需要分页器 -->
       <div class="swiper-pagination"></div>
@@ -13,7 +11,10 @@
       <div class="swiper-button-next swiper-button-white"></div>
     </div>
     <div class="section">
-      <h2 class="title">电影</h2>
+      <div class="title">
+        <div class="t-left">电影</div>
+        <div class="t-right"><a href="#" @click="more('movie')">更多</a></div>
+      </div>
       <div class="movieList">
         <ul class="inner">
           <li class="item" v-for="(item,index) in movieList" >
@@ -32,7 +33,10 @@
       </div>
     </div>
     <div class="section">
-      <h2 class="title">电视剧</h2>
+      <div class="title">
+        <div class="t-left">电视剧</div>
+        <div class="t-right"><a href="#" @click="more('tv')">更多</a></div>
+      </div>
       <div class="movieList">
         <ul class="inner">
           <li class="item" v-for="(item,index) in tvList" >
@@ -51,7 +55,10 @@
       </div>
     </div>
     <div class="section">
-      <h2 class="title">动漫</h2>
+      <div class="title">
+        <div class="t-left">动漫</div>
+        <div class="t-right"><a href="#" @click="more('cartoon')">更多</a></div>
+      </div>
       <div class="movieList">
         <ul class="inner">
           <li class="item" v-for="(item,index) in cartoonList" >
@@ -79,16 +86,46 @@
     name: 'home',
     data() {
       return {
+        recBannerList: [],
         movieList: [],
         tvList: [],
         cartoonList: [],
       }
     },
     mounted() {
-      this.initSwiper();
+      this.loadRecList();
       this.loadMovieList();
+      // this.initSwiper();
     },
     methods: {
+      more(type){
+        this.$router.push("/videos?type="+type);
+      },
+      loadRecList() {
+        this.axios.get('/api/recBanner/findList')
+          .then(res => {
+            let r = res.data;
+            if(r.code){
+              this.recBannerList = r.data;
+              this.$nextTick(() => { // 下一个UI帧再初始化swiper;解决bug:不循环播放
+                this.initSwiper();
+              });
+            }else {
+              this.$notify({
+                title: '提示',
+                message: r.msg,
+                type: 'warning'
+              });
+            }
+          })
+          .catch(error => {
+            this.$notify({
+              title: '提示',
+              message: "资源暂不可用",
+              type: 'error'
+            });
+          });
+      },
       loadMovieList() {
         this.axios.get('/api/video/findHomeList')
           .then(res => {
@@ -99,22 +136,20 @@
               this.cartoonList = r.data.cartoonList;
 
             }else {
-              alert(r.msg);
+              this.$notify({
+                title: '提示',
+                message: r.msg,
+                type: 'warning'
+              });
             }
           })
           .catch(error => {
-            console.log(error);
+            this.$notify({
+              title: '提示',
+              message: "资源暂不可用",
+              type: 'error'
+            });
           });
-        // this.movieList = [
-        //   {"pic": "//puui.qpic.cn/vcover_vt_pic/0/n53msqi44qlqd691518088692/220"},
-        //   {"pic": "//puui.qpic.cn/vcover_vt_pic/0/n53msqi44qlqd691518088692/220"},
-        //   {"pic": "//puui.qpic.cn/vcover_vt_pic/0/n53msqi44qlqd691518088692/220"},
-        //   {"pic": "//puui.qpic.cn/vcover_vt_pic/0/n53msqi44qlqd691518088692/220"},
-        //   {"pic": "//puui.qpic.cn/vcover_vt_pic/0/n53msqi44qlqd691518088692/220"},
-        //   {"pic": "//puui.qpic.cn/vcover_vt_pic/0/n53msqi44qlqd691518088692/220"},
-        //   {"pic": "//puui.qpic.cn/vcover_vt_pic/0/n53msqi44qlqd691518088692/220"},
-        //   {"pic": "//puui.qpic.cn/vcover_vt_pic/0/n53msqi44qlqd691518088692/220"},
-        // ];
       },
       doplay(item){
         this.$router.push("/player?id="+item.id)
@@ -128,6 +163,8 @@
             stopOnLastSlide: false,
             disableOnInteraction: false
           },
+          observer: true,//修改swiper自己或子元素时，自动初始化swiper
+          observeParents: true,//修改swiper的父元素时，自动初始化swiper
           pagination: {
             el: '.swiper-pagination',
           },
@@ -190,7 +227,15 @@
     font-size: 22px;
     border-bottom: solid #e8e8e8 1px;
   }
-
+  .section .title .t-left{
+    display: inline-flex;
+    float: left;
+  }
+  .section .title .t-right{
+    display: inline-flex;
+    font-size: 18px;
+    float: right;
+  }
   .movieList {
     margin-top: 10px;
   }

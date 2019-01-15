@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div id="main">
     <div class="navBox">
       <div class="nav">
         <div class="navList">
           <router-link to="/" class="item cur">首页</router-link>
         </div>
-        <div class="login" v-if="isLogin === 'false'">
+        <div class="login" v-if="!isLogin ">
           <router-link to="/login" class="item">登录</router-link>
           <router-link to="/register" class="item">注册</router-link>
         </div>
-        <div class="login" v-if="isLogin === 'true'">
+        <div class="login" v-if="isLogin ">
           <div class="item">已登录</div>
           <a href="#" class="item" @click="logout">注销</a>
         </div>
@@ -26,10 +26,10 @@
       }
     },
     computed:{
-      isLogin(){
-        return this.$store.state.isLogin;
-      }
-    },
+      isLogin:function () {
+        return this.$store.getters.getIsLogin ;
+      },
+  },
     created() {
     },
     mounted() {
@@ -48,20 +48,27 @@
               this.$router.push({name: 'home'})
             }else {
               this.$notify({
-                title: '错误提示',
+                title: '提示',
                 message: r.msg,
                 type: 'warning'
               });
             }
           })
           .catch(error => {
-            console.log(error);
+            this.$notify({
+              title: '提示',
+              message: "资源暂不可用",
+              type: 'error'
+            });
           });
       },
     }
   }
 </script>
 <style scoped>
+  #main {
+    padding-bottom: 70px;
+  }
   .navBox {
     position: fixed;
     top: 0;

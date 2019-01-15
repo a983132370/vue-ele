@@ -5,6 +5,7 @@ import login from '@/pages/login'
 import register from '@/pages/register'
 import home from '@/pages/home'
 import player from '@/pages/player'
+import videos from '@/pages/videos'
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ export default new Router({
           // meta: {
           //   requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录的
           // },
+        },
+        {
+          path: '/videos',
+          name: 'videos',
+          component: videos,
         }
       ]
     },

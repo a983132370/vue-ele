@@ -44,7 +44,7 @@
               this.$router.push({name: 'home'})
             }else {
               this.$notify({
-                title: '错误提示',
+                title: '提示',
                 message: r.msg,
                 type: 'warning'
               });
