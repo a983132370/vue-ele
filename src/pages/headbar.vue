@@ -10,9 +10,9 @@
           <router-link to="/register" class="item">注册</router-link>
         </div>
         <div class="login" v-if="isLogin ">
-          <a href="#" class="item" @click="toRecord">观看记录</a>
+          <a class="item" @click="toRecord">观看记录</a>
           <div class="item">已登录</div>
-          <a href="#" class="item" @click="logout">注销</a>
+          <a class="item" @click="logout">注销</a>
         </div>
       </div>
     </div>

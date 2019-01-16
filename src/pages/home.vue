@@ -13,7 +13,7 @@
     <div class="section">
       <div class="title">
         <div class="t-left">电影</div>
-        <div class="t-right"><a href="#" @click="more('movie')">更多</a></div>
+        <div class="t-right"><a @click="more('movie')">更多</a></div>
       </div>
       <div class="movieList">
         <ul class="inner">
@@ -35,7 +35,7 @@
     <div class="section">
       <div class="title">
         <div class="t-left">电视剧</div>
-        <div class="t-right"><a href="#" @click="more('tv')">更多</a></div>
+        <div class="t-right"><a @click="more('tv')">更多</a></div>
       </div>
       <div class="movieList">
         <ul class="inner">
@@ -57,7 +57,7 @@
     <div class="section">
       <div class="title">
         <div class="t-left">动漫</div>
-        <div class="t-right"><a href="#" @click="more('cartoon')">更多</a></div>
+        <div class="t-right"><a @click="more('cartoon')">更多</a></div>
       </div>
       <div class="movieList">
         <ul class="inner">
