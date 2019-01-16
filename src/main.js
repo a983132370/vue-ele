@@ -7,6 +7,7 @@ import axios from 'axios'
 import qs from 'Qs'
 import { Button, Notification,Alert, Pagination,Input,Loading} from 'element-ui';
 import Vuex from 'vuex' //引入状态管理
+import {getCookie} from './util/cookie.js'
 //引入样式
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/reset.css';
@@ -40,15 +41,18 @@ var store = new Vuex.Store({
     //组件中采用this.$store.commit('方法名') 的方式调用，实现充分解耦
     //内部操作必须在此刻完成(同步)
     [ACCOUNT_LOGIN] (state) { // 登录
+      localStorage.setItem("isLogin",true);
       state.isLogin = Boolean(true);
     },
     [ACCOUNT_LOGOUT] (state) { // 退出登录
+      localStorage.setItem("isLogin",false);
       state.isLogin = Boolean(false);
     },
   },
   getters: {  // getters
     getIsLogin: function (state) {
-      return state.isLogin
+      state.isLogin = (localStorage.getItem("isLogin") === 'true' || getCookie("isLogin") === 'true');
+      return state.isLogin ;
     }
   }
 });

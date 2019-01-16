@@ -6,6 +6,7 @@ import register from '@/pages/register'
 import home from '@/pages/home'
 import player from '@/pages/player'
 import videos from '@/pages/videos'
+import record from '@/pages/record'
 
 Vue.use(Router)
 
@@ -43,6 +44,11 @@ export default new Router({
           path: '/videos',
           name: 'videos',
           component: videos,
+        },
+        {
+          path: '/record',
+          name: 'record',
+          component: record,
         }
       ]
     },

@@ -10,6 +10,7 @@
           <router-link to="/register" class="item">注册</router-link>
         </div>
         <div class="login" v-if="isLogin ">
+          <a href="#" class="item" @click="toRecord">观看记录</a>
           <div class="item">已登录</div>
           <a href="#" class="item" @click="logout">注销</a>
         </div>
@@ -35,6 +36,9 @@
     mounted() {
     },
     methods: {
+      toRecord(){
+        this.$router.push("/record");
+      },
       logout(){
         this.axios.post('/api/user/logout')
           .then(res => {
