@@ -37,7 +37,7 @@
       <div class="line"></div>
       <div class="page-show">
         <div class="right">
-          <a href="#" @click="isVisible = !isVisible" v-if="pageInfoList.length>20">显示全部</a>
+          <a href="#" @click="isVisible = !isVisible" v-if="pageInfoList !== undefined && pageInfoList.length>20">显示全部</a>
         </div>
       </div>
       <div :class="{'page-visible': isVisible,'page-hidden':!isVisible}">
@@ -92,12 +92,16 @@
               this.pageInfoList = r.data.episodes;
               this.info = r.data.info;
 
-              this.pageInfoList.forEach((it,index) =>{
-                if(this.info.episode === index+1){
+              if(this.pageInfoList !== undefined){
+                this.pageInfoList.forEach((it,index) =>{
+                  if(this.info.episode === index+1){
                     it.focusFlag =true;
                     this.play = r.data.prefix + it.vurl;
-                }
-              })
+                  }
+                })
+              }else {
+                this.play = r.data.prefix + this.info.playUrl;
+              }
           // alert(JSON.stringify(r.data));
             }else {
               alert(r.msg);
